@@ -10,7 +10,7 @@ store/
   listing/google-play.md        all Play Console texts + Data safety / content rating / app content answers
   listing/app-store.md          all App Store Connect texts + App Privacy / age rating / review notes
   privacy-policy.html           copy of the privacy policy (the live one is on the website, see section 0)
-  graphics/                     Play icon 512, feature graphic 1024×500, App Store icon 1024
+  graphics/                     Play icon 512, feature graphic 1024×500, header images, App Store icon 1024
   screenshots/<device>/         captioned store screenshots (9 per device size)  ← upload these
   screenshots/raw/<device>/     the same moments without captions (real emulator captures)
   builds/                       downloaded .aab / .ipa files (not in git)
@@ -114,6 +114,7 @@ Before every new upload, raise `ios.buildNumber` (and `version` for a new store 
 - [ ] Privacy policy URL
 - [ ] App icon 512 × 512 – `graphics/play-store-icon-512.png`
 - [ ] Feature graphic 1024 × 500 – `graphics/play-feature-graphic-1024x500.png`
+- [ ] Header image 5244 × 2950 or 3840 × 1646 – `graphics/play-header-*.png`
 - [ ] Phone screenshots – `screenshots/android-phone/`
 - [ ] 7" tablet screenshots – `screenshots/android-tablet-7/`
 - [ ] 10" tablet screenshots – `screenshots/android-tablet-10/`

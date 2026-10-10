@@ -54,6 +54,7 @@ Fix it. Clean it. Paint it. Love it.
 
 **App icon:** `store/graphics/play-store-icon-512.png` (512 × 512)
 **Feature graphic:** `store/graphics/play-feature-graphic-1024x500.png` (1024 × 500)
+**Header image** (Kopfzeilen-Inhalt): `store/graphics/play-header-5244x2950.png` (5244 × 2950) or `store/graphics/play-header-3840x1646.png` (3840 × 1646)
 
 **Phone screenshots** (upload all 9 in order): `store/screenshots/android-phone/01…09.png` (1080 × 1920)
 **7-inch tablet screenshots:** `store/screenshots/android-tablet-7/01…09.png` (1200 × 1920)

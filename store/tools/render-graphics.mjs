@@ -99,7 +99,42 @@ function featureGraphic() {
   <div class="phone a"></div><div class="phone b"></div>`;
 }
 
-const iconPage = `<style>${FONTS} img{display:block;width:100%;height:100%}</style><img src="${png(ICON)}">`;
+// ── Header image (Google Play, 5244 × 2950 and 3840 × 1646). Rendered at half size, 2× scale. ──
+function headerImage(W, H) {
+  const shot = (n) => png(path.join(ROOT, 'store/screenshots/raw/ios-iphone-6.9', `${n}.png`));
+  const right = Math.round(W * 0.48);
+  const span = W * 0.95 - right;
+  const pw = Math.round(Math.min((H * 0.72 * 1320) / 2868, span / (1 + 3 * 0.74)));
+  const ph = Math.round((pw * (2868 - 159 - 64)) / 1320);
+  const step = (span - pw) / 3;
+  const statusBar = Math.round((159 / 1320) * pw);
+  const phones = ['01-workshop', '03-cleaning', '05-paint', '06-results']
+    .map((n, i) => {
+      const lift = [0.07, -0.02, 0.09, 0.0][i] * H;
+      const rot = [-8, -2, 4, 9][i];
+      return `<div class="phone" style="left:${right + i * step}px; top:${(H - ph) / 2 + lift}px; transform:rotate(${rot}deg); z-index:${i}"><img src="${shot(n)}"></div>`;
+    })
+    .join('');
+  const title = Math.round(Math.min(H * 0.15, W * 0.066));
+  return `<style>${FONTS}
+    body { width:${W}px; height:${H}px; position:relative; color:${NAVY};
+      background: radial-gradient(circle at 12% 15%, #FFF6E6 0%, #FFE7C2 40%, #F6C27E 100%); }
+    body::before { content:''; position:absolute; inset:0; opacity:0.12;
+      background-image: radial-gradient(${NAVY} ${H * 0.003}px, transparent ${H * 0.0035}px); background-size: ${Math.round(H * 0.07)}px ${Math.round(H * 0.07)}px; }
+    .text { position:absolute; left:${Math.round(W * 0.07)}px; top:50%; transform:translateY(-50%); }
+    .icon { width:${Math.round(H * 0.2)}px; height:${Math.round(H * 0.2)}px; border-radius:${Math.round(H * 0.045)}px; border:${Math.round(H * 0.008)}px solid ${NAVY};
+      box-shadow: 0 ${Math.round(H * 0.012)}px 0 rgba(31,42,68,0.3); display:block; margin-bottom:${Math.round(H * 0.045)}px; }
+    h1 { font-size:${title}px; font-weight:700; line-height:0.95; }
+    p { margin-top:${Math.round(H * 0.04)}px; font-size:${Math.round(title * 0.32)}px; font-weight:600; }
+    .phone { position:absolute; width:${pw}px; height:${ph}px; border-radius:${Math.round(pw * 0.12)}px; border:${Math.max(4, Math.round(pw * 0.03))}px solid ${NAVY};
+      overflow:hidden; background:#FFF6E6; box-shadow: 0 ${Math.round(H * 0.018)}px 0 rgba(31,42,68,0.3); }
+    .phone img { display:block; width:100%; margin-top:-${statusBar}px; }
+  </style>
+  <div class="text"><img class="icon" src="${png(ICON)}"><h1>Tiny<br>Repair Shop</h1><p>Fix it. Clean it. Paint it. Love it.</p></div>
+  ${phones}`;
+}
+
+const iconPage =`<style>${FONTS} img{display:block;width:100%;height:100%}</style><img src="${png(ICON)}">`;
 
 const browser = await chromium.launch({ channel: process.platform === 'win32' ? 'msedge' : 'chrome', headless: true });
 const render = async (html, file, w, h, scale = 1) => {
@@ -118,6 +153,8 @@ try {
   await render(iconPage, path.join(graphics, 'app-store-icon-1024.png'), 1024, 1024);
   await render(iconPage, path.join(graphics, 'play-store-icon-512.png'), 512, 512);
   await render(featureGraphic(), path.join(graphics, 'play-feature-graphic-1024x500.png'), 1024, 500);
+  await render(headerImage(2622, 1475), path.join(graphics, 'play-header-5244x2950.png'), 2622, 1475, 2);
+  await render(headerImage(1920, 823), path.join(graphics, 'play-header-3840x1646.png'), 1920, 823, 2);
   if (process.argv[2] === 'graphics') process.exit(0);
 
   console.log('Captioned screenshots');
