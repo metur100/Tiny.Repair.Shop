@@ -39,3 +39,15 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+/android
+
+# tests
+coverage/
+
+# signing material and local credentials (never commit)
+credentials/
+credentials.json
+*.keystore
+
+# local tool settings
+.claude/
