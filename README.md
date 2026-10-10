@@ -6,6 +6,8 @@ hands-on mini-games, paint it and test it, then hand it back and watch the custo
 
 Made by **Medin Turkes**.
 
+**Website:** https://metur100.github.io/Tiny.Repair.Shop.Landing/ ([privacy policy](https://metur100.github.io/Tiny.Repair.Shop.Landing/privacy.html), [support](https://metur100.github.io/Tiny.Repair.Shop.Landing/#support))
+
 <p>
   <img src="docs/screenshots/01-workshop.png" width="180" alt="Workshop" />
   <img src="docs/screenshots/05-cleaning.png" width="180" alt="Cleaning" />
