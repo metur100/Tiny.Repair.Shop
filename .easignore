@@ -1,11 +1,11 @@
 # EAS uploads the project from here. Keep the archive small and never upload signing secrets.
 node_modules/
 .expo/
-dist/
-web-build/
-coverage/
-store/
-docs/
+/dist/
+/web-build/
+/coverage/
+/store/
+/docs/
 .claude/
 /ios
 /android

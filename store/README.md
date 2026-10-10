@@ -4,6 +4,8 @@ Everything needed to publish on **Google Play** and the **Apple App Store**.
 
 ```
 app.json / eas.json             app identity, icons, splash, permissions, build + submit profiles
+credentials.json                Android upload-key config  (NOT in git – back it up!)
+credentials/android/*.jks       Android upload keystore    (NOT in git – back it up!)
 store/
   listing/google-play.md        all Play Console texts + Data safety / content rating / app content answers
   listing/app-store.md          all App Store Connect texts + App Privacy / age rating / review notes
@@ -44,9 +46,9 @@ eas login                       # account certidevelopment@gmail.com (owner of c
 eas build -p android --profile production
 ```
 
-On the first build, EAS asks to **generate a new Android keystore**. Answer *Yes*: EAS stores it on Expo's servers, so it can't get lost on this PC. To download a backup copy, run `eas credentials -p android`.
+The AAB is signed with the **upload key** from `credentials.json` (local credentials, see section 5).
 
-When the build finishes, EAS prints a download link for the `.aab`. Save it as `store/builds/tiny-repair-shop-1.0.0-1.aab`.
+When the build finishes, EAS prints a download link for the `.aab`. The 1.0.0 (1) bundle is in `store/builds/tiny-repair-shop-1.0.0-1.aab`.
 
 ### First upload (must be done by hand once)
 
@@ -151,7 +153,20 @@ node store/tools/render-graphics.mjs           # captions, feature graphic, stor
 
 The capture script loads a mid-game save through the development-only `/?demo=1` route ([src/dev/demoSave.ts](../src/dev/demoSave.ts)). Production builds ignore this route.
 
-Troubleshooting:
+## 5. Keep these safe
+
+The Android upload keystore and its password are not committed to git. Both are on this PC only:
+
+- `credentials/android/tiny-repair-shop-upload.jks`, alias `tiny-repair-shop`
+- the store and key passwords, in `credentials.json`
+
+Keep copies in a password manager or another secure backup. If the upload key is lost, it can be reset through Play Console support (Play App Signing), but that takes days.
+
+Upload key fingerprints (Play Console shows these under **App integrity**):
+- SHA-1 `72:70:21:C6:FA:C7:37:88:22:8D:BF:68:D2:2D:37:7F:D9:CA:2E:66`
+- SHA-256 `80:7F:E1:B9:4B:CF:0E:68:82:B7:45:72:55:97:47:F0:9B:8E:AD:89:DE:19:80:79:30:5D:60:CD:9D:FC:24:FE`
+
+## Troubleshooting
 
 - **"Failed to download remote update" in Expo Go:** the emulator clock is behind. Expo signs the manifest with a certificate the device then treats as not yet valid. Fix the clock with `adb root` and `adb shell date -u MMDDhhmmYYYY.ss`.
 - **Expo Go's floating developer button shows in shots:** turn off *Tools button* in the Expo Go developer menu.
