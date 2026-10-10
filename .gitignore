@@ -51,3 +51,6 @@ credentials.json
 
 # local tool settings
 .claude/
+
+# store release builds
+store/builds/

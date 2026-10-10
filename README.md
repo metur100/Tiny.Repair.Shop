@@ -126,7 +126,9 @@ restart. The screenshots come from that run.
 
 ## Building for the stores
 
-The project uses Expo's managed workflow. With an Expo account and EAS CLI (`npm i -g eas-cli`):
+The full release guide is in [store/README.md](store/README.md). It covers the store texts, Data safety and App Privacy answers, captioned screenshots for every required size, the feature graphic and a checklist.
+
+The project uses Expo's managed workflow and is linked to the EAS project `@certi-development/tiny-repair-shop`. With EAS CLI (`npm i -g eas-cli`):
 
 ```bash
 eas build --platform android --profile production   # .aab for Google Play
@@ -175,8 +177,12 @@ tests/            Jest unit and component tests
 docs/screenshots  Real emulator screenshots
 ```
 
-During development, `/repair/<jobId>?stage=clean` (or `paint`, `test` and so on) opens a stage directly.
-This is ignored in production builds.
+During development:
+
+- `/repair/<jobId>?stage=clean` (or `paint`, `test` and so on) opens a stage directly.
+- `/?demo=1` loads a mid-game save ([src/dev/demoSave.ts](src/dev/demoSave.ts)), which is used to capture the store screenshots.
+
+Production builds ignore both.
 
 ## License
 

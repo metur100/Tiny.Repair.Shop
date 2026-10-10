@@ -1,12 +1,14 @@
 import { Canvas, Circle, Group, Path, Skia } from '@shopify/react-native-skia';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useMemo } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import Animated, { Easing, FadeIn, useDerivedValue, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated';
 
 import { AppText } from '@/components/AppText';
 import { PaperTexture } from '@/components/Screen';
+import { demoSave } from '@/dev/demoSave';
 import { useReduceMotion } from '@/hooks/useMotion';
+import { writeSave } from '@/store/saveManager';
 import { useGameStore } from '@/store/useGameStore';
 import { palette, spacing } from '@/theme';
 
@@ -27,7 +29,16 @@ function gear(cx: number, cy: number, r: number, teeth: number) {
 export default function Splash() {
   const reduce = useReduceMotion();
   const onboardingDone = useGameStore((s) => s.onboardingDone);
+  const { demo } = useLocalSearchParams<{ demo?: string }>();
   const spin = useSharedValue(0);
+  useEffect(() => {
+    // Development builds can load a mid-game save (used to capture store screenshots).
+    if (__DEV__ && demo === '1') {
+      const save = demoSave();
+      useGameStore.getState().hydrate(save);
+      void writeSave(save);
+    }
+  }, [demo]);
   useEffect(() => {
     if (!reduce) spin.value = withRepeat(withTiming(1, { duration: 2400, easing: Easing.linear }), -1, false);
     const t = setTimeout(() => router.replace(onboardingDone ? '/workshop' : '/onboarding'), reduce ? 400 : 1600);
